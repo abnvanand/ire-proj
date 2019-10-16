@@ -1,5 +1,5 @@
 import xml.sax
-from src.constants import FIELD_SEP, LINE_SEP
+import csv
 from src.utils import clean_text
 
 
@@ -10,6 +10,7 @@ class ArticleHandler(xml.sax.ContentHandler):
         self.published_at = ''
         self.articleContent = []
         self.outfilefp = open(outfile, "w")
+        self.csvwriter = csv.writer(self.outfilefp)
         self.ground_truth = ground_truth
 
     def startElement(self, tag, attributes):
@@ -24,10 +25,12 @@ class ArticleHandler(xml.sax.ContentHandler):
         if tag == 'article':
             content = " ".join(self.articleContent)
             content = clean_text(content)
-            self.outfilefp.write(f"{self.article_id}{FIELD_SEP}"
-                                 f"{self.title}{FIELD_SEP}"
-                                 f"{content}{FIELD_SEP}"
-                                 f"{self.ground_truth[self.article_id]}{LINE_SEP}")
+            print(self.article_id)
+            row = [self.article_id,
+                   self.title,
+                   content,
+                   self.ground_truth[self.article_id]]
+            self.csvwriter.writerow(row)
 
     def characters(self, content):
         self.articleContent.append(content)
@@ -65,7 +68,7 @@ if __name__ == '__main__':
     # STOPSHIP remove defaults
     parser.add_argument('--groundTruthsFilePath', '-g', default="data/ground-truth-training-byarticle-20181122.xml")
     parser.add_argument('--articlesFilePath', '-a', default="data/articles-training-byarticle-20181122.xml")
-    parser.add_argument('--outputFilePath', '-o', default="processedData/articles-training-byarticle.txt")
+    parser.add_argument('--outputFilePath', '-o', default="processedData/articles-training-byarticle.csv")
     args = parser.parse_args()
 
     parser = xml.sax.make_parser()
