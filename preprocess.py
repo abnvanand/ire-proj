@@ -58,16 +58,26 @@ class GroundTruthHandler(xml.sax.ContentHandler):
             groundTruth[self.article_id] = self.hyperpartisan
 
 
-parser = xml.sax.make_parser()
+if __name__ == '__main__':
+    import argparse
 
-# turn off namespaces
-parser.setFeature(xml.sax.handler.feature_namespaces, 0)
+    parser = argparse.ArgumentParser()
+    # STOPSHIP remove defaults
+    parser.add_argument('--groundTruthsFilePath', '-g', default="data/ground-truth-training-byarticle-20181122.xml")
+    parser.add_argument('--articlesFilePath', '-a', default="data/articles-training-byarticle-20181122.xml")
+    parser.add_argument('--outputFilePath', '-o', default="processedData/articles-training-byarticle.txt")
+    args = parser.parse_args()
 
-handlerGroundTruth = GroundTruthHandler()
-parser.setContentHandler(handlerGroundTruth)
-parser.parse("data/ground-truth-training-byarticle-20181122.xml")
+    parser = xml.sax.make_parser()
 
-handler = ArticleHandler("processedData/articles-training-byarticle.txt", groundTruth)
-parser.setContentHandler(handler)
+    # turn off namespaces
+    parser.setFeature(xml.sax.handler.feature_namespaces, 0)
 
-parser.parse("data/articles-training-byarticle-20181122.xml")
+    handlerGroundTruth = GroundTruthHandler()
+    parser.setContentHandler(handlerGroundTruth)
+    parser.parse(args.groundTruthsFilePath)
+
+    handler = ArticleHandler(args.outputFilePath, groundTruth)
+    parser.setContentHandler(handler)
+
+    parser.parse(args.articlesFilePath)
