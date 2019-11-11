@@ -26,9 +26,20 @@ python preprocess.py -a data/articles-validation-bypublisher-20181122.xml \
 ```shell script
 python lstm_multitask.py -h
 
-python lstm_multitask.py -d processedData \
-    --trainingfile articles-training-bypublisher.csv \  
-    --testfile articles-validation-bypublisher.csv
+python lstm_multitask.py  \
+    --trainingfile processedData/articles-training-bypublisher.csv \
+    --glovefile processedData/glove.6B.300d.txt
 ```
-This will train and save lstm models in current directory.
+This will train and save lstm models in current directory.  
+This will also generate a tokenizer dump `tokenizer.p` file needed to token 
+the test set while performing prediction.
+
+
+## Step4: Predict
+```shell script
+python predict.py \
+  --inputfile processedData/articles-training-bypublisher.csv \
+  --modelsdir models \
+  --tokenizerfile tokenizer.p
+```
 
