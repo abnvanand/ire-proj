@@ -39,6 +39,7 @@ This will train and save lstm models in current directory.
 This will also generate a tokenizer dump `tokenizer.p` file needed to token 
 the test set while performing prediction.
 
+>> Pretrained models can be downloaded [here](https://drive.google.com/open?id=1JO-7nsA8Cx_47KyN82zDeC65ymTPTWGc)
 
 ## Step4: Predict
 ```shell script
