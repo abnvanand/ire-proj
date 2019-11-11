@@ -1,4 +1,4 @@
-# Steps to make a predict
+# Steps to make a prediction
 ```shell script
 python ishyperpartisan.py
 ```
