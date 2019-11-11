@@ -48,11 +48,12 @@ MULTICLASS_MODEL = MODEL_DIR + "/partial_lstm_multiclass.h5"
 MULTITASK_MODEL = MODEL_DIR + "/partial_lstm_multitask.h5"
 
 # TOKENIZER_DUMP_FILE = PROJECT_DIR+"/models/tokenizer.p"
-TOKENIZER_DUMP_FILE = input("Enter path to tokenizer dump file")
+TOKENIZER_DUMP_FILE = input("Enter full path of tokenizer dump file")
 
-# sampleFile = input("Enter filename containing article text")
+sampleFilePath = input("Enter filename containing article text")
+# sampleFilePath = "sampleArticle.txt"
 
-sfp = open(PROJECT_DIR + "/sampleArticle.txt")
+sfp = open(sampleFilePath)
 articleContent = sfp.readlines()
 articleContent = ''.join(articleContent)
 df_test = pd.DataFrame([articleContent, articleContent], columns=['articleContent'])

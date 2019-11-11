@@ -1,4 +1,9 @@
-# Steps
+# Steps to make a predict
+```shell script
+python ishyperpartisan.py
+```
+
+# Steps To Build the project
 
 ## Step1 Getting the dataset
 This is a SemEval19 task and you can find the raw data [here](https://zenodo.org/record/1489920). 
